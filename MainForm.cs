@@ -45,7 +45,7 @@ public sealed class MainForm : Form
     static string ToMeetUrl(string? arg)
     {
         if (string.IsNullOrWhiteSpace(arg)) return Home;
-        arg = arg.Trim();
+        arg = arg!.Trim();
         if (Uri.TryCreate(arg, UriKind.Absolute, out var u) && u.Host == "meet.google.com") return u.ToString();
         return Regex.IsMatch(arg, "^[a-z]{3}-[a-z]{4}-[a-z]{3}$") ? Home + arg : Home;
     }

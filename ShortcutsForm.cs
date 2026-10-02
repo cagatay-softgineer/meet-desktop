@@ -45,7 +45,7 @@ sealed class ShortcutsForm : Form
         foreach (var (action, label) in HotkeySettings.Actions)
         {
             var box = new TextBox { ReadOnly = true, Width = 190, BackColor = SystemColors.Window, Text = map[action].ToString(), ShortcutsEnabled = false };
-            box.KeyDown += (_, e) => Capture(action, box, e);
+            box.KeyDown += (_, e) => RecordKey(action, box, e);
             box.Enter += (_, _) => BeginInvoke(new Action(() => box.SelectionLength = 0));
             var clear = new Button { Text = "Clear", AutoSize = true };
             clear.Click += (_, _) => { map[action] = default; box.Text = ""; Validate(); };
@@ -79,7 +79,7 @@ sealed class ShortcutsForm : Form
         if (unavailable.Any()) status.Text = "Highlighted shortcuts are already used by another program. Pick different ones.";
     }
 
-    void Capture(MeetAction action, TextBox box, KeyEventArgs e)
+    void RecordKey(MeetAction action, TextBox box, KeyEventArgs e)
     {
         e.SuppressKeyPress = true;
         e.Handled = true;

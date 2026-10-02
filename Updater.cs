@@ -20,6 +20,7 @@ static class Updater
     const string AssetName = "GoogleMeetSetup.exe";
     static readonly TimeSpan CheckInterval = TimeSpan.FromHours(20);
 
+#pragma warning disable CS0649 // fields are filled by the JSON serializer
     [DataContract]
     sealed class GitHubRelease
     {
@@ -35,6 +36,7 @@ static class Updater
         [DataMember(Name = "name")] public string Name = "";
         [DataMember(Name = "browser_download_url")] public string Url = "";
     }
+#pragma warning restore CS0649
 
     public sealed class UpdateInfo
     {
@@ -153,7 +155,8 @@ sealed class UpdateDialog : Form
         };
         var notes = new TextBox
         {
-            Text = string.IsNullOrWhiteSpace(update.Notes) ? "No release notes." : update.Notes.Replace("\r\n", "\n").Replace("\n", "\r\n"),
+            Text = string.IsNullOrWhiteSpace(update.Notes) ? "No release notes."
+                : update.Notes.Replace("**", "").Replace("\r\n", "\n").Replace("\n", "\r\n"),
             Multiline = true, ReadOnly = true, ScrollBars = ScrollBars.Vertical, Dock = DockStyle.Fill, BackColor = SystemColors.Window,
         };
         var bar = new ProgressBar { Dock = DockStyle.Bottom, Height = 8, Visible = false };
@@ -188,5 +191,6 @@ sealed class UpdateDialog : Form
         Controls.Add(buttons);
         AcceptButton = install;
         CancelButton = later;
+        Shown += (_, _) => { notes.SelectionLength = 0; install.Focus(); };
     }
 }

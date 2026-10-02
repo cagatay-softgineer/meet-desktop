@@ -4,7 +4,7 @@
 #define AppName "Google Meet"
 ; CI passes /DAppVersion=x.y.z from the git tag; keep this in sync with <Version> in MeetApp.csproj.
 #ifndef AppVersion
-  #define AppVersion "1.2.0"
+  #define AppVersion "1.2.1"
 #endif
 #define AppExe "MeetApp.exe"
 #define Bin "..\bin\Release\net48"
