@@ -1,0 +1,6 @@
+bin/
+obj/
+.vs/
+*.user
+installer/output/
+installer/MicrosoftEdgeWebview2Setup.exe
